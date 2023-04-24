@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>formValidation</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;            
+            justify-content: center;
+            align-items: center;
+        
+            background-color: rgb(5, 5, 5);
+
+        }
+        form{
+            text-align: center;
+            width:350px;
+        }
+        .perdetail{
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            gap: 20px;
+        }
+        fieldset{
+            border: none;
+            border-top: 5px solid rgb(20, 211, 218);
+            font-size: 30px;
+            color: rgb(218, 99, 20);
+            font-weight: 600;
+        }
+        legend{
+            padding: 0 5px;
+            
+        }
+        input{
+            width: 200px;
+            height: 20px;
+            padding: 10px 14PX;
+            border-radius:5px ;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            color: rgb(0, 132, 165);
+            font-size: 11pt;
+        }
+        input::placeholder{
+            color: rgb(218, 99, 20);
+            font-weight: 500;
+            font-size: 10pt;
+            
+        }
+        #btn{
+            overflow: hidden;
+            color: rgb(218, 99, 20);
+            position: relative;
+            margin: auto;
+            width: 100px;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 12pt;
+            border: none;
+            border-radius:5px ;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+        #btn::before{
+            content: '';
+            visibility: hidden;
+            width:100px;
+            height: 38px;
+            border-radius:5px ;
+            border-top-right-radius: 50%;
+            border-top-left-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            
+            background-color: #75e4e4;
+        }
+        #btn:hover::before{
+            
+            visibility: visible;
+            transition: all 1.5s ease;
+            transform: translateY(100%);
+            /* padding: 10px;
+            font-size: 11PT;
+            margin-bottom: 4px;
+            background-color: rgb(218, 99, 20);
+            color: #fff; */
+        }
+        #display_area{
+            visibility: hidden;
+            margin-top: 20px;
+            font-size: 15PX;
+            width: 300px;
+            border-radius:10px ;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            gap: 50px;
+            background-color: #fff;
+            color: black;
+        }
+        .name_text{
+            width: 7px;
+            height: 7px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 2px;
+            right:18pt; 
+            font-size: 12pt;
+            transition: all 0.5s ease;
+        }
+        .open{
+            width: 10px;
+            height: 10px;
+            background-color: green;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 2px;
+            right:16pt; 
+            font-size: 12pt;
+            transition: all 0.5s ease;
+        }
+        #loading{
+            position: absolute;
+            top:50%;
+            left: 50%;
+            z-index: 2;
+            width: 50px;
+            height: 50px;
+            border: 10px solid rgb(201, 78, 78);
+            border-radius: 50%;
+            border-top: 10px solid #050101;
+            visibility: hidden;
+            /* transition: all 1s ease-in; */
+            animation: loading 2s linear infinite;
+        }
+        @keyframes loading{
+            0%,100%{
+                transform: rotate(0deg);
+                
+                 }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading"></div>
+    <form action="#">
+        <fieldset>
+            <legend>Personal <span style="color:rgb(14, 223, 223)">I</span>nfo</legend>
+        <div class="perdetail">
+            <div style="position: relative;"><input type="text" onkeyup="onchanger(0)" placeholder="Name"><span class="name_text"></span></div>
+            <div style="position: relative;"><input type="email" onkeyup="onchanger(1)"  placeholder="sampl@email.com"> <span class="name_text"></span></div>
+            <div style="position: relative;"><input type="text" onkeyup="onchanger(2)" placeholder="Ex:home nu. 123, pondicherry"><span class="name_text"></span></div>
+            <div style="position: relative;"><input type="text" onkeyup="onchanger(3)" placeholder="City"><span class="name_text"></span></div>
+            <div style="position: relative;"><input type="number" onkeyup="onchanger(4)" placeholder="Zip Code"><span class="name_text"></span></div>
+            <div style="position: relative;"><button type="submit" id="btn" onclick="clickbtn()">Submit</button><div id="display_area">
+        
+            </div></div>
+        </div>
+    </fieldset>
+    </form>
+    
+</body>
+<script>
+    let signal = document.querySelectorAll(".name_text");
+    let text1 = document.getElementsByTagName('input');
+    let btn = document.getElementById('btn');
+
+    // let text1 = document.getElementById('l');
+     
+   
+     
+    let flag = true;
+    //  change coor
+    function onchanger(i){
+        var address = /^[\w\s.-]+\d+,\s*[\w\s.-]+$/;;
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var regex = /^[a-zA-Z]*$/;
+        console.log(text1[i].value);
+                // if(text1[i].value != ""){
+                    if(regex.test(text1[i].value)){
+                       if( text1[i].placeholder == "Name"){signal[i].setAttribute('class','open');}
+                        
+                    }
+                    if(text1[i].value.match(mailformat)){
+                       if( text1[i].placeholder == "sampl@email.com"){signal[i].setAttribute('class','open');}
+                        
+                    }
+                     
+                    if(address.test(text1[i].value)){
+                       if( text1[i].placeholder == "Ex:home nu. 123, pondicherry"){signal[i].setAttribute('class','open');}
+                        
+                    }
+                    if( text1[i].placeholder == "City"){signal[i].setAttribute('class','open');}                    
+                    if( text1[i].placeholder == "Zip Code"){signal[i].setAttribute('class','open');}                    
+                // }
+
+                if( text1[i].value == "")
+                signal[i].setAttribute('class','name_text');
+            }
+    //  button action
+    function clickbtn(){
+
+        let display_value = document.getElementById('display_area');
+        let h = true;
+        let kk = true;
+        if(h){
+            btn.style.visibility = "hidden";
+        loading.style.visibility = "visible";
+         h = false;
+        }
+        if(h == false){
+            setTimeout(() => {
+                btn.style.visibility = "visible";
+                loading.style.visibility = "hidden";
+            },2000)
+        }
+        
+        for(let i = 0; i < text1.length;i++){
+            if(text1[i].value == ""){
+                alert("text number "+`${text1[i].placeholder}`+" is empty pls fill it");
+               kk = false; 
+               break;
+            }
+             if(kk == true){
+                setTimeout(() => {
+                display_value.style.visibility = "visible" ;
+                display_value.innerHTML +=  "This is your " + text1[i].placeholder + " : "+ text1[i].value+"<br>";
+                flag = false;
+             },1000);
+             }
+            
+            //  location.reload();
+             
+        }        
+     }
+</script>
+</html>
